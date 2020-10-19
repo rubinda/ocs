@@ -1,0 +1,22 @@
+% Klices s [x, fval] = fminsearch(@(x)bana(x), [-3, -3]);
+% Treba je podati toliko spremenljivk koliko jih je v funkciji! (x ima 2)
+
+% POMAGA pri zbirki nalog Izpit 23. maj 2008:
+   % 1.), 2.) <- podoben nacin
+   
+% Isti izpit naloga 3.), drug problem, gre se za omejitve: fmincon()
+  % fun ... funkcija ki jo minimiziramo
+  % x0  ... zacetna tocka
+  % A, B, Aeq, Beq ... ce so vse omejitve linearne lahko uporabis te
+  % matrike
+  % NONLCON ... ce so omejitve nelinearne
+  % LB, UB ... lower/upper bound za vsako spremenljivko (vektor)
+  
+  
+% Izpit naloga 4.) uporabis roots:
+   % roots([1 -6 -92 402 91 -396])   <- vrne nicle, ne minimume
+ % ali
+   % fzero( ... )
+% Ce je vec ko 1 spremenljivka ne govorimo o niclah, ker je vec osi <- ne
+% bomo racunali
+  

@@ -1,0 +1,15 @@
+# MacOS fs
+.DS_Store
+
+# LaTeX output
+*.aux
+*.log
+*.out
+*.dvi
+*.toc
+*.synctex.gz
+
+# MATLAB
+*.m~
+*.autosave
+*.slxc

@@ -1,8 +1,3 @@
-% To je predloga za poročila o domačih nalogah pri predmetih, katerih
-% nosilec je Blaž Zupan. Seveda lahko tudi dodaš kakšen nov, zanimiv
-% in uporaben element, ki ga v tej predlogi (še) ni. Več o LaTeX-u izveš na
-% spletu, na primer na http://tobi.oetiker.ch/lshort/lshort.pdf.
-%
 % To predlogo lahko spremeniš v PDF dokument s pomočjo programa
 % pdflatex, ki je del standardne instalacije LaTeX programov.
 
@@ -38,7 +33,7 @@ basicstyle=\ttfamily\footnotesize\setstretch{1},
 backgroundcolor=\color{light-gray},
 }
 
-\lstset{language=Matlab,%
+\lstset{language=Matlab,
     %basicstyle=\color{red},
     breaklines=true,%
     morekeywords={matlab2tikz},
@@ -75,8 +70,6 @@ Dokument predstavlja zapisnik dela, ki se je izvajalo na vajah predmeta. Poleg t
 
 \section{Splošni napotki vaj}
 
-\subsection{Termin 12.10.2020}
-
 V kolikor uporabljaš simbolične funkcije, je potrebno spremenljivke inicializirati s \texttt{syms}. V kolikor bi si rad izrisal neko funkcijo, to storiš najlažje tako, da si definiraš simbolične spremenljivke s \texttt{syms}, definiraš neko funkcijo in kličeš izris s \texttt{ezmesh} (ali \texttt{fmesh}). Malo je treba tudi ugibati pri definiciji intervala, na katerem je izris, da dobiš dobro predstavitev. Glej kodo~\ref{vaje1splosno}
 
 \lstinputlisting[label=vaje1splosno,caption=Splošna uporaba Matlab na 1. vajah,language=Matlab]{vaje1/vaje1.m}
@@ -85,7 +78,8 @@ V kolikor uporabljaš simbolične funkcije, je potrebno spremenljivke inicializi
 \begin{itemize}
 	\item \texttt{fminsearch(@($x$) function($x$), $x_0$)} ... Uporabimo, ko iščemo minimume funkcij. \texttt{@($x$)} nam pove, da je $x$ neodvisna spremenljivka. \texttt{function($x$)} je definicija neke funkcije (v večini primerov skozi ta dokument, bo ta funkcija shranjena v ločenem m-file). $x_0$ nam določa, kje bo postopek pričel, torej našo začetno točko. Priporočljivo je, da se uporabijo različne točke, saj se lahko nekatere \textit{ujamejo} v lokalne minimume, mi pa si želimo poiskati globalnega. Dovolj dobro je, da vzamemo kar nekaj naključno generiranih točk, si shranimo rešitve za vsak klic in jih med sabo primerjamo. Če so vse vrednosti enake, potem to tipično pomeni, da je algoritem našel globalni minimum v vseh primerih, rešitev je potem katerakoli izmed pridobljenih. V kolikor niso vse rešitve enake, pa vzamemo najmanjšo vrednost, saj je tam globalni minimum. Za iskanje maksimumov lahko uporabimo isto funkcijo in ji spremenimo le parametre: \texttt{fminsearch(@($x$) -function($x$), $x_0$)} (dodali smo -). Paziti je potrebno, da ima tudi rezultat potem spremenjen (negativen) predznak.
 	
-	\item \texttt{fmincon(@($x$) function($x$), $x_0$, $A$, $b$, $A_{eq}$, $b_{eq}$, LB, UB, NONLCON)} ... pa je funkcija, kjer išemo minimume ob podanih omejitvah. Enako kot prej sta defirnirani \texttt{function($x$)} in $x_0$, dodajo pa se še naslednji členi. Matrika $A$ predstavlja omejitve, pri katerih gre za relacijo $\leq$. V matriko $A$ zapišemo števila na levi strani pred spremenljivkami, paziti pa je potrebno, da če katera spremenljivka ni označena v omejitvi jo v matriki predstavimo s členom 0. Vektor $b$ predstavlja desno stran omejitev (torej vrednosti ki so na desni strani relacije $leq$). V kolikor je relacija $\geq$ je potrebno vse člene ustrezno pomnožiti z $-1$. Matrika $A_{eq}$ in vektor $b_{eq}$ predstavljata omejitve kjer je relacija $=$. \texttt{LB} in \texttt{UB} predstavljata spodnjo (\textit{Lower Bound}) in zgornjo mejo (\textit{Upper Bound}). \texttt{NONLCON} pa uporabimo kadar omejitve niso linearne (\textit{non linear constraints)}. V tem primeru se tipično definirajo v ločenem \textit{m-file}. Glej primer na nalogi TODO
+	\item \texttt{fmincon(@($x$) function($x$), $x_0$, $A$, $b$, $A_{eq}$, $b_{eq}$, LB, UB, NONLCON)} ... pa je funkcija, kjer išemo minimume ob podanih omejitvah. Enako kot prej sta defirnirani \texttt{function($x$)} in $x_0$, dodajo pa se še naslednji členi. Matrika $A$ predstavlja omejitve, pri katerih gre za relacijo $\leq$. V matriko $A$ zapišemo števila na levi strani pred spremenljivkami, paziti pa je potrebno, da če katera spremenljivka ni označena v omejitvi jo v matriki predstavimo s členom 0. Vektor $b$ predstavlja desno stran omejitev (torej vrednosti ki so na desni strani relacije $leq$). V kolikor je relacija $\geq$ je potrebno vse člene ustrezno pomnožiti z $-1$. Matrika $A_{eq}$ in vektor $b_{eq}$ predstavljata omejitve kjer je relacija $=$. \texttt{LB} in \texttt{UB} predstavljata spodnjo (\textit{Lower Bound}) in zgornjo mejo (\textit{Upper Bound}). \texttt{NONLCON} pa uporabimo kadar omejitve niso linearne (\textit{non linear constraints)}. V tem primeru se tipično definirajo v ločenem \textit{m-file}. Glej primer na nalogi~\ref{task:maj2008_3} ali nalogi~\ref{task:februar2014_2}.
+	
 \end{itemize}
 
 Poglejmo si primer iskanja minimuma za funkcijo \texttt{bana} definirano v ločenem \textit{m-file}:
@@ -124,7 +118,9 @@ Minimiziraj funkcijo:
 f(x) = (x_1 - 0.5)^2 (x_1 + 1)^2 + (x_2 + 1)^2 (x_2 - 1)
 \end{equation}
 Ali ima funkcija samo en lokalni minimum oziroma maksimum? Če jih ima morda več, jih poišči! Kolikšna je vrednost funkcije v točki minimuma. Pomagaš si lahko z risanjem funkcije.
-\textbf{Rešitev:} \\ 
+
+\vspace{5mm}
+\noindent \textbf{Rešitev:} \\ 
 Funkcijo si lahko izrišemo s pomočjo ukazov
 
 \begin{lstlisting}[language=Matlab]
@@ -289,7 +285,8 @@ Letalska družba kupuje gorivo za letala pri treh različnih prodajalcih. Družb
 
 Vsak prodajalec pa ima na voljo omejene količine goriva, ki ga skupno lahko dostavi v posameznem mesecu. Te količine so $320.000\si{\litre}$ prvi prodajalec, $270.000\si{\litre}$ drugi ter $190.000\si{\litre}$  tretji prodajalec. Določi pravilo za nakup goriva letalske družbe, ki bo zadovoljilo njihovim potrebam na vsakem od letališč ter bo ekonomsko čimbolj ugodno.
 
-\textbf{Rešitev}: \\
+\vspace{5mm}
+\noindent \textbf{Rešitev}: \\
 Najprej si zastavimo spremenljivke $x_i,$ kjer  $i  \in \{1, 2, 3, 4, 5, 6, 7, 8, 9\}$, pri čemer je $x_1$ količina goriva kupljenega na letališču 1 pri prodajalcu 1, $x_2$ je količina goriva kupljenega na letališču 2 pri prodajalcu 1, ... in $x_9$ je količina goriva kupljenega na letališču 3 pri prodajalcu 3. Iz tega sledijo omejitve:
 
 \begin{equation} \label{con:maj2008_5}
@@ -442,7 +439,8 @@ Trgovina z malimi živalmi je ugotovila, da potrebuje hrček najmanj 70 enot bel
 \end{table}
 Kakšno razmerje posameznih vrst hrane bo mešanica hrane za hrčka, ki bo zadovoljila njegove dnevne potrebe in bo cenovno najbolj ugodna za trgovino? Napiši sistem enačb in ga reši z MATLAB-om!
 
-\textbf{Rešitev:} \\
+\vspace{5mm}
+\noindent \\textbf{Rešitev:} \\
 Najprej določimo spremenljivke: $x_N$, kar pomeni koliko doz hrane $N$ bomo kupili ($N$ predstavlja vrsto hrane, torej A, B, C ... F). Funkcija ki jo minimiziramo je cena:
 \begin{equation} \label{eq:junij2008_5}
 f(x) = 2x_1 + 3x_2 + 5x_3 + 6x_4 + 8x_5 + 8x_6
@@ -469,7 +467,6 @@ Poišči vse lokalne minimume in maksimume funkcije na intervalu ter njene vredn
 \begin{equation} \label{eq:september2008_1}
 	f(x) = 3x_1x_2 + 40x_1 + 30x_2 - 4x_1^2  - x_1^4 -3x_2^2 -x_2^4
 \end{equation}
-
 \textbf{Rešitev:} \\
 Najprej si narišimo funkcijo (slika~\ref{img:september2008_1_plot}).
 
@@ -539,36 +536,149 @@ Matrike $A, b, A_{eq}, B_{eq}$ smo pustili prazne, dodali smo spodnjo mejo niče
 Pridobljena rešitev je očitno veljavna (\texttt{flag = 1}): $x_{min} = [0.0000, 1.3333, 0.6667]$, vrednost pa je $f(x_{min}) = 2.8148$.
 
 
-\subsection{Izpit 10. februrar 2014}
-
-\subsubsection{Naloga 1.)}
-
-Glej sliko na desktop.
-Funkcija je definirana v testf4.m, skripta za zaganjane pa v script1.m
-
-klicemo script1 in dobimo 999 resitev.
-ressort = sortrows(resitve, 3) .. sortiramo
-
-nekaj je mutil z unique, pa je dobil za vse vrstice 
-
-- 186.7309 3 stolpec
-
-enovite = unique(ressort(1:20,:))
-
-\subsubsection{Naloga 2.)}
-
-2 m file, pa se eno skripto si lahko naredis slika na namizju
+\subsection{Izpit 19. Januar 2012}
 
 \subsubsection{Naloga 3.)}
 
-Geometrijska naloga, prisekan stožec ima špic odrezan. Skica: krog v njega narises trapez, po tem si nastavis enacbe za omejitev (stranski ris) slika na namizju
+Narisemo si skico. (Slika na namizju)
+Imamo dva podobna trikotnika, narisemo si kote in uporabimo kotne funkcije da racunamo l1 + l2 = l. Funkcijo racunamo kot minimum ??? Ker ce racunamo maksimum dobimo resitev neskoncno.
+Resitev naloge je f = 7.621m, $\alpha = 0.7482 RAD$
+
+
+
+\subsubsection{Naloga 4.)}
+
+Startamo v 1 in hocemo prit v 9. Povezave so usmerjene, lahko gres le v doloceno smer (ni negativnih povezav). Nastavit je treba neke enacbe. Lahko imamo spremenljivke vozlisca, druga moznost pa je da so spremenljivke povezave. Tu je logicno da je spremenljivka povezave. Iz vsakega vozlisca se lahko odlocimo da gremo po eni poti ali ne. Torej 1 -> 2 povezava (recimo ji x(1)) pove ali smo sli po poti (=1) ali ne (=0).
+
+Nastavit moramo nek sistem enacb. Spremenljivke bomo oznacevali z $x_{vhod, izhod}$.
+Ker v x1 zacnemo je prva omejitev:
+$x_12 + x_13 + x_14 = 1$ // <- tocno po eni izmed poti mormo
+Podnobna enacba dobimo za zadnje vozlisce
+$x_79 + x_69 + x_89 = 1$ // <- tocno po eni povezavi moramo prit v sink
+
+Podobne enacbe moramo spisat za vas vmesna vozlisca.
+Recimo za vozlisce st. 3:
+vsota prihodnih mora bit enaka vsoti izhodnih (ce smo prisli v neko vozlisce potem moramo iz njega tudi oditi)
+$x_25 + x_35 = x_56 + x_57 + x_{58}$
+
+treba je prestet vse puscice pa prestevilcit spremenljivke -> x1, x2, x3, x4 ... x16
+A, b sta prazni -> vse omejitve so tipa je enako
+Aeq ima 16 stolpcev in 9 vrstic -> pri 7 so desne strani 0, pri source pa sink pa je desna stran 1
+
+
+\subsection{Izpit 10. februar 2014}
+
+Izpit je profesor pokazal na vajah.
+
+\subsubsection{Naloga 1.)}
+
+\textbf{Navodila:} \\
+Poišči vsaj dvajset različnih globalnih minimumov funkcije in njihovo vrednost (vse so enake) v teh točkah.
+\footnotesize
+\begin{equation}
+f(x) = \left( \sum_{i=1}^{5}i\cos((i + 1)x_1 + i) \right)\left( \sum_{i=1}^{5}i\cos((i + 1)x_2 + i) \right) \left( \sum_{i=1}^{5}i\cos((i + 1)x_3 + i) \right) 
+ \left( \sum_{i=1}^{5}i\cos((i + 1)x_4 + i) \right)
+\end{equation}
+\normalsize
+in omejitvijo spremenljivk $-10 \leq x_i \leq 10$. \\
+
+\noindent POMOČ: Ker bo ročno iskanje minimumov z različnimi starnimi točkami preveč zamudno, si lahko pomagaš s kratkim programčkom za iskanje najoljših rešitev!
+Po elektronski pošti oddaj tudi vse izdelane programe in dobljene rešitve!
+
+\vspace{5mm}
+\noindent \textbf{Rešitev:} \\
+Definiramo si funkcijo v novem \textit{m-file} (\texttt{februar2014\_1\_script.m}):
+\lstinputlisting[language=Matlab]{vaje2/februar2014_1.m}
+... in pomožno skripto, ki požene iskanje nad naključno generiranim vhodom. Meje naključnega generiranja postavimo v omejitev, ki je omenjena v navodilih.
+\lstinputlisting[language=Matlab]{vaje2/februar2014_1_script.m}
+Po končanem klicu skripte se nam v spremenljivko \texttt{resitve} shranijo vse veljavne vrednosti, v našem primeru je to 100 vrstic (število ponovitev zanke).
+
+
+\subsubsection{Naloga 2.)}
+\label{task:februar2014_2}
+
+\textbf{Navodila:} \\
+Poišči maksimum\footnote{V originalnem izpitu je bilo navodilo iskanje minimuma, na vajah je profesor omenil, da je ta problem trivialen in je popravil navodila, da se išče maksimum} podane funkcije in njeno vrednost v tej točki ob navedenih omejitvah za $n=2,3,4,5$.
+\begin{equation} 
+f(x) = \big( \sqrt{n} \big)^{n} \prod_{i=1}^n x_i
+\end{equation}
+\begin{equation}
+\begin{gathered}
+	\sum_{i=1}^n x_i^2 = 1 \\
+	0 \leq x_i \leq 1 \quad i=1, ..., n
+\end{gathered}
+\end{equation}
+\textbf{Rešitev:} \\
+Kreiramo si nov \textit{m-file} z definicijo funkcije (\texttt{februar2014\_2.m}):
+\lstinputlisting[language=Matlab]{vaje3/februar2014_2.m}
+... datoteko z omejitvami (\texttt{februar2014\_2\_con.m}):
+\lstinputlisting[language=Matlab]{vaje3/februar2014_2_con.m}
+... in vse skupaj poženemo v nekem skriptu
+\lstinputlisting[language=Matlab]{vaje3/februar2014_2_skript.m}
+V skriptu upoštevamo omejitev z naključnim generiranjem med 0 in 1, prvo pa smo eksplicitno zapisali v omejitvah (\texttt{ceq}). V skriptu spreminjamo $n$ vrednost
+in dobimo rezultate zanje.
+
+\subsubsection{Naloga 3.)}
+
+Geometrijska naloga, prisekan stožec ima špic odrezan. Skica: krog v njega narises trapez, po tem si nastavis enacbe za omejitev (stranski ris) slika februar2014\_3 + skica na namizju
+R ... polmer krogle (dolocen  =10cm)
+R1 ... sponjo presekan polmer kroznice
+R2 ... zgoraj prisekan polmer kroznice (naceloma R2 < R1)
+x1 .. h1
+x2 .. h2
+x3 .. R1
+x4 .. R2
+
+enacba za funkcijo je enacba za volumen
+Dobis pravokotne trikotnike R,h2,R2 in R,h1,R1
+$R1^2 + h1^2 = R^2$
+$R2^2 + h2^2 = R^2$
+
+2 file februar2014\_3.m in februar2014\_3\_con.m
+
+[x, fval, flag] = fmincon(@(x)-februar2014\_3(x), [8 7 9 8], [], [], [], [], zeros(1,4), [10 10 10 10], @(x)februar2014\_3\_con(x))
+
+Resitev:   bojda je valj, ni blo navodil tako da ni dodatnih omejitev treba pisat
+x =
+
+    5.7735    5.7735    8.1650    8.1650
+
+
+fval =
+
+  -2.4184e+03
+
+
+flag =
+
+     1
+
+Ostane se drugi del: vsota obeh polmerov je vecja ko 12 -> dodas v februar2014\_3\_con "-x(3) - x(4) + 12" v c
 
 
 \subsubsection{Naloga 4.)}
 
 gle jslika na namizju. Izdelki so nedeljivi -> pomeni da nastavis integer solutions. Modificiran knapsack problem (izdelki se lahko ponavljajo). Napisati si je treba enacbe (4 spremenljivke, koliko izdelkov P1 = x1, ...).
-Cena 13x1  +27x2 ... + 55x4 - maksimiziras
+Cena $13x_1  +27x_2 + 41x_3 + 55x_4$ - maksimiziras
 Omejitve .... 21 ton + celan stevila (intlinprog, inlincon -> [1 2 3 4] ... vse morajo bit celostevilcne) 
 
+f= [13 27 41 55]
+A = [1 2 3 4]
+b = 21
 
+[x, fval, flag] = intlinprog(-f, 1:4, A,b, [], [], zeros(1,4))
+x =
+
+    1.0000
+         0
+         0
+    5.0000
+
+fval =
+
+  -288
+
+flag =
+
+     1
 \end{document}

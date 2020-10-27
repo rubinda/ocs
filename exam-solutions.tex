@@ -72,7 +72,7 @@ Dokument predstavlja zapisnik dela, ki se je izvajalo na vajah predmeta. Poleg t
 
 V kolikor uporabljaš simbolične funkcije, je potrebno spremenljivke inicializirati s \texttt{syms}. V kolikor bi si rad izrisal neko funkcijo, to storiš najlažje tako, da si definiraš simbolične spremenljivke s \texttt{syms}, definiraš neko funkcijo in kličeš izris s \texttt{ezmesh} (ali \texttt{fmesh}). Malo je treba tudi ugibati pri definiciji intervala, na katerem je izris, da dobiš dobro predstavitev. Glej kodo~\ref{vaje1splosno}
 
-\lstinputlisting[label=vaje1splosno,caption=Splošna uporaba Matlab na 1. vajah,language=Matlab]{vaje1/vaje1.m}
+\lstinputlisting[label=vaje1splosno,caption=Splošna uporaba Matlab na 1. vajah,language=Matlab]{vaje/vaje1.m}
 
 Še nekaj koristnih napotkov pri uporabi funkcij:
 \begin{itemize}
@@ -83,7 +83,7 @@ V kolikor uporabljaš simbolične funkcije, je potrebno spremenljivke inicializi
 \end{itemize}
 
 Poglejmo si primer iskanja minimuma za funkcijo \texttt{bana} definirano v ločenem \textit{m-file}:
-\lstinputlisting[label=minsearch_sample_function,language=Matlab]{vaje1/bana.m}
+\lstinputlisting[label=minsearch_sample_function,language=Matlab]{vaje/bana.m}
 Uporabimo klic in določimo nek interval (pri tem lahko za enostavne funkcije pomaga izris):
 \begin{lstlisting}[label=minsearch_sample_call,language=Matlab]
 % Funkcija vraca tocko x, vrednost minimuma fval, in zastavico flag (katero opazujemo da je 1 - pomeni da je najdena ustrezna resitev)
@@ -129,7 +129,7 @@ f = (x - 0.5)^2 * (x + 1)^2 + (y + 1)^2 * (y - 1)^2;
 fmesh(f, [-3, 3])
 \end{lstlisting}
 V novem \texttt{maj2008\_1.m} si definiramo funkcijo:
-\lstinputlisting[language=Matlab]{vaje1/maj2008_1.m}
+\lstinputlisting[language=Matlab]{exams/maj2008_1.m}
 Potem lahko napišemo skripto (oziroma preverimo v zanki) iskanje minimuma iz večih točk:
 
 \begin{lstlisting}[language=Matlab]
@@ -187,7 +187,7 @@ fmesh(f, [-3, 3])
 \end{figure}
 
 Pri izrisu (glej sliko~\ref{img:maj2008_2_plot}) vidimo, da ima funkcija 2 vrhova in to v bližini točk $[0, -1]$ in $[0, 1]$. Funkcijo definiramo v ločenem \textit{m-file} (\texttt{maj2008\_2.m}):
-\lstinputlisting[language=Matlab]{vaje1/maj2008_2.m} 
+\lstinputlisting[language=Matlab]{exams/maj2008_2.m} 
 ... in uporabimo informacijo iz izrisa v naslednjem klicu:
 \begin{lstlisting}
 [x, fval, flag] = fminsearch(@(x)-maj2008_2(x), [0, 1])
@@ -230,9 +230,9 @@ Najprej si izrišimo funkcijo, da dobimo vpogled s čem imamo opravka (glej slik
 \end{figure}
 
 V ločenem \textit{m-file} si sedaj definiramo funkcijo (\texttt{maj2008\_3.m}):
-\lstinputlisting[language=Matlab]{vaje1/maj2008_3.m}
+\lstinputlisting[language=Matlab]{exams/maj2008_3.m}
 ... in omejitve (\texttt{maj2008\_3\_con.m}):
-\lstinputlisting[language=Matlab]{vaje1/maj2008_3_con.m}
+\lstinputlisting[language=Matlab]{exams/maj2008_3_con.m}
 Omejitve so tipa $\geq$, zato smo jih pomnožili s $-1$ preden smo jih vstavili v spremenljvko \texttt{c}. Sedaj lahko poženemo iskanje minimuma v bližini $[0, 0]$:
 \begin{lstlisting}
 [x, fval, flag] = fmincon(@(x)maj2008_3(x), [0, 0], [], [], [], [], [], [], @(x)maj2008_3_con(x))
@@ -305,7 +305,7 @@ x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9 \geq 0
 f(x) = 92x_1 + 89x_2 + 90x_3 + 91x_4 + 91x_5 + 95x_6 + 87x_7 + 90x_8 + 92x_9
 \end{equation}
 Vključili smo tudi omejitev nenegativnosti, saj smatramo, da letalska družba ne želi preprodajati goriva iz enega letališča na drugo (torej kupiti negativno količino). Problem lahko rešimo s funkcijo \texttt{intlinprog}:
-\lstinputlisting[language=Matlab]{vaje1/maj2008_5.m}
+\lstinputlisting[language=Matlab]{exams/maj2008_5.m}
 Iz tega lahko razberemo, da je najugodneje na letališu 1 kupiti $100.000\si{\litre}$ pri prodajalcu 3, na letališču 2 $120.000\si{\litre}$ pri prodajalcu 2 in $60.000\si{\litre}$ pri prodajalcu 3, na letališču 3 pa $320.000\si{\litre}$ pri prodajalcu 1 in $30.000\si{\litre}$ pri prodajalcu 3. Skupno bomo porabili 565.800,00 \euro{}.
 
 
@@ -344,7 +344,7 @@ Reši naslednji sistem enačb:
 \end{equation}
 \textbf{Rešitev:} \\
 V novem \textit{m-file} si definiramo enačbi (\texttt{junij2008\_2.m}):
-\lstinputlisting[language=Matlab]{vaje2/junij2008_2.m}
+\lstinputlisting[language=Matlab]{exams/junij2008_2.m}
 ... in nato kličemo funkcijo \texttt{fsolve}:
 \begin{lstlisting}[language=Matlab]
 % Poskusimo najprej s [0, 0]
@@ -377,7 +377,7 @@ ob naslednjih omejitvah:
 \end{equation}
 \textbf{Rešitev:} \\
 V novem \textit{m-file} si definiramo funkcijo (\texttt{junij2008\_3.m}):
-\lstinputlisting[language=Matlab]{vaje2/junij2008_3.m}
+\lstinputlisting[language=Matlab]{exams/junij2008_3.m}
 In kličemo funkcijo \texttt{fmincon}:
 \begin{lstlisting}[language=Matlab]
 [x, fval] = fmincon(@(x)junij2008_3(x), [1 1 1], [-1 -2 -1], -4, [], [], [0 0 0])
@@ -407,7 +407,7 @@ Ker imamo le 2 spremenljivki, si izrišimo funkcijo (glej sliko~\ref{img:junij20
 	\label{img:junij2008_4_plot}
 \end{figure}
 Vidimo, da je nekje v bližini točke $[0, 0]$ morda minimum. Deifinirajmo nov \textit{m-file} (\texttt{junij2008\_4.m}):
-\lstinputlisting[language=Matlab]{vaje2/junij2008_4.m}
+\lstinputlisting[language=Matlab]{exams/junij2008_4.m}
 ... in kličemo funkcijo \texttt{fminsearch}:
 
 \begin{lstlisting}[language=Matlab]
@@ -455,7 +455,7 @@ omejitve pa so sledeče:
 	\end{gathered}
 \end{equation}
 Enačno lahko rešimo s pomočjo funkcije  \texttt{intlinprog}:
-\lstinputlisting[language=Matlab]{vaje2/junij2008_5.m}
+\lstinputlisting[language=Matlab]{exams/junij2008_5.m}
 Ugotovimo, da je cenovno najbolj ugodno kupiti 0.9091 doz hrane A in 1.8182 doz hrane B za skupno ceno 7.2727.
 
 
@@ -477,7 +477,7 @@ Najprej si narišimo funkcijo (slika~\ref{img:september2008_1_plot}).
 	\label{img:september2008_1_plot}
 \end{figure}
 Iz grafa je razvidno, da imamo opravka z 1 globalnim maksimumom, ki ga poiščemo s \texttt{fminsearch}. Deifiniramo si funkcijo v ločenem \textit{m-file} (\texttt{september2008\_1.m}):
-\lstinputlisting[language=Matlab]{vaje2/september2008_1.m}
+\lstinputlisting[language=Matlab]{exams/september2008_1.m}
 ... in pokličemo funkcijo v okolici $[-3, -3]$:
 \begin{lstlisting}[language=Matlab]
 [x, fval] = fminsearch(@(x)-september2008_1(x), [-3, -3])
@@ -497,9 +497,9 @@ Ne smemo pozabiti, ker smo obrnili predznak za maksimizacijo, je obrnjen tudi pr
 
 \textbf{Rešitev:} \\
 Funkcija ima preveč dimenzij za risanje, zato kar poskusimo z nekaj sreče. Definiramo si nov \textit{m-file} (\texttt{september2008\_2.m}:
-\lstinputlisting[language=Matlab]{vaje2/september2008_2.m}
+\lstinputlisting[language=Matlab]{exams/september2008_2.m}
 ... in kličemo funkcijo \texttt{fminsearch} (z obratno vrednostjo ker maksimiziramo):
-\lstinputlisting[language=Matlab]{vaje2/september2008_2_script.m}
+\lstinputlisting[language=Matlab]{exams/september2008_2_script.m}
 Ker smo v tem primeru iskali maksimum funkcije, lahko rezultat sortiramo kar naraščujoče, saj je potrebno spremeniti predznak in je najmanjša vrednost enaka največi.
 Vidimo, da je prvih 10 najdenih točk identičnih, torej lahko vzamemo maksimum $x_{max} = [1.4963, 1.4963, 1.0000]$ in vrednost $f_{max} = -1$ (ne pozabimo na $-$).
 
@@ -521,9 +521,9 @@ ob naslednjih omejitvah:
 
 \textbf{Rešitev:} \\
 V ločenih \textit{m-file} si definiramo funkcijo (\texttt{september2008\_3.m}):
-\lstinputlisting[language=Matlab]{vaje2/september2008_3.m}
+\lstinputlisting[language=Matlab]{exams/september2008_3.m}
 ... in omejitve (\texttt{september2008\_3\_con.m}):
-\lstinputlisting[language=Matlab]{vaje2/september2008_3_con.m}
+\lstinputlisting[language=Matlab]{exams/september2008_3_con.m}
 ... in kličemo funkcijo \texttt{fmincon}:
 \begin{lstlisting}
 [x, fval, flag] = fmincon(@(x)september2008_3(x), [1 1 1], [], [], [], [], zeros(1, 3), [], @(x)september2008_3_con(x))
@@ -588,9 +588,9 @@ Po elektronski pošti oddaj tudi vse izdelane programe in dobljene rešitve!
 \vspace{5mm}
 \noindent \textbf{Rešitev:} \\
 Definiramo si funkcijo v novem \textit{m-file} (\texttt{februar2014\_1\_script.m}):
-\lstinputlisting[language=Matlab]{vaje2/februar2014_1.m}
+\lstinputlisting[language=Matlab]{exams/februar2014_1.m}
 ... in pomožno skripto, ki požene iskanje nad naključno generiranim vhodom. Meje naključnega generiranja postavimo v omejitev, ki je omenjena v navodilih.
-\lstinputlisting[language=Matlab]{vaje2/februar2014_1_script.m}
+\lstinputlisting[language=Matlab]{exams/februar2014_1_script.m}
 Po končanem klicu skripte se nam v spremenljivko \texttt{resitve} shranijo vse veljavne vrednosti, v našem primeru je to 100 vrstic (število ponovitev zanke).
 
 
@@ -610,11 +610,11 @@ f(x) = \big( \sqrt{n} \big)^{n} \prod_{i=1}^n x_i
 \end{equation}
 \textbf{Rešitev:} \\
 Kreiramo si nov \textit{m-file} z definicijo funkcije (\texttt{februar2014\_2.m}):
-\lstinputlisting[language=Matlab]{vaje3/februar2014_2.m}
+\lstinputlisting[language=Matlab]{exams/februar2014_2.m}
 ... datoteko z omejitvami (\texttt{februar2014\_2\_con.m}):
-\lstinputlisting[language=Matlab]{vaje3/februar2014_2_con.m}
+\lstinputlisting[language=Matlab]{exams/februar2014_2_con.m}
 ... in vse skupaj poženemo v nekem skriptu
-\lstinputlisting[language=Matlab]{vaje3/februar2014_2_skript.m}
+\lstinputlisting[language=Matlab]{exams/februar2014_2_skript.m}
 V skriptu upoštevamo omejitev z naključnim generiranjem med 0 in 1, prvo pa smo eksplicitno zapisali v omejitvah (\texttt{ceq}). V skriptu spreminjamo $n$ vrednost
 in dobimo rezultate zanje.
 

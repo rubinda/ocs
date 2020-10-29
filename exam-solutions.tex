@@ -620,40 +620,55 @@ in dobimo rezultate zanje.
 
 \subsubsection{Naloga 3.)}
 
-Geometrijska naloga, prisekan stožec ima špic odrezan. Skica: krog v njega narises trapez, po tem si nastavis enacbe za omejitev (stranski ris) slika februar2014\_3 + skica na namizju
-R ... polmer krogle (dolocen  =10cm)
-R1 ... sponjo presekan polmer kroznice
-R2 ... zgoraj prisekan polmer kroznice (naceloma R2 < R1)
-x1 .. h1
-x2 .. h2
-x3 .. R1
-x4 .. R2
+\textbf{Navodila:} \\
+Iz lesene krogle s polmerom $10\si{\cm}$ želimo s pomočjo obrezovanja izdelati prisekani stožec, ki bo imel čim večjo možno prostornino (volumen). Koliko bosta znašala polmera osnovnih ploskev takega prisekanega stožca in koliko njegova višina, da bo volumen dobljenega prisekanega stožca maksimalen? Poskusi rešiti nalogo še za minimalni volumen prisekanega stožca, če želimo, da je vsota obeh polmerov osnovnih ploskev v prisekanem stožcu večja kot $12\si{\cm}$.\\
+POMOČ: Volumen prisekanega stožca se izračuna po enačbi:
+\begin{equation*}
+V = \frac{\pi h}{3} \left( R_1^2 + R_2^2 + R_1R_2 \right),
+\end{equation*}
+kjer sta $R_1$ in $R_2$ polmera osnovnik ploskev prisekanega stožca, $h$ pa njegova višina.
 
-enacba za funkcijo je enacba za volumen
-Dobis pravokotne trikotnike R,h2,R2 in R,h1,R1
-$R1^2 + h1^2 = R^2$
-$R2^2 + h2^2 = R^2$
-
-2 file februar2014\_3.m in februar2014\_3\_con.m
-
+\vspace{5mm} 
+\noindent \textbf{Rešitev:} \\
+Za takšne geometrijske naloge si je najbolje narisati skico (glej sliko~\ref{img:februar2014_3_sketch}).  
+\begin{figure}[hb]
+	\centering	
+	\includegraphics[scale=0.45]{images/februar2014_3_sketch.pdf}
+	\caption{Skica z oznakami stranic za pogled iz strani na prisekani stožec vstavljen v kroglo.}
+	\label{img:februar2014_3_sketch}
+\end{figure}
+Iz skice lahko opazimo, da lahko stožec razstavimo na pravokotne trikotnike ($\bigtriangleup R_1 R h_1$ in $\bigtriangleup R_2 R h_2$). Ker je polmer krogle ($R$) podan, bodo naše spremenljivke očitno ($R_1$, $R_2$, $h_1$ in $h_2$). Omejitve lahko zapišemo s pomočjo Pitagorovega izreka:
+\begin{equation} \label{con:februar2014_3}
+	\begin{gathered}
+		R_1^2 + h_1^2 = R^2 \\
+		R_2^2 + h_2^2 = R^2 \\
+		R_1 + R_2 > 12\si{\cm} $ *$
+	\end{gathered}
+\end{equation}
+To zadnjo omejitev uporabimo le v drugem delu naloge (iskanje najmanjšega stožca, kjer še to drži) in jo v prvem delu izpustimo. Uporabili bomo funkcijo \texttt{fmincon}, zato si definiramo nov \textit{m-file} za definicijo funkcije (\texttt{februar2014\_3.m}):
+\lstinputlisting[language=Matlab]{exams/februar2014_3.m}
+... in ločenega za definicijo omejitev (\texttt{februar2014\_3\_con.m}):
+\lstinputlisting[language=Matlab]{exams/februar2014_3_con.m}
+Paziti je treba, da prvotne omejitve~\ref{con:februar2014_3} v Matlabu pretvorimo v ustrezno obliko (vse morajo biti tipa $\leq$ in na desni strani želimo 0).
+Kar sledi je še iskanje maksimuma (prvi del naloge):
+\begin{lstlisting}[language=Matlab]
 [x, fval, flag] = fmincon(@(x)-februar2014\_3(x), [8 7 9 8], [], [], [], [], zeros(1,4), [10 10 10 10], @(x)februar2014\_3\_con(x))
+% Vrne:
+% x = 5.7735    5.7735    8.1650    8.1650
+% fval = -2.4184e+03
+% flag = 1
+\end{lstlisting}
+Ne smemo pozabiti na minus pri definiciji funkcije, začetno točko izberemo naključno, $A$, $b$, $A_{eq}$ in $b_{eq}$ pustimo prazne, za spodnjo omejitev postavimo 0, za zgornjo lahko dodamo desetice (stožec ne sme presegati krogle), vstavimo pa še omejitve $c$ in $c_{eq}$. Rešitev je potemtakem $h_1 = h_2 = 5.7735$ in $R_1 = R_2 = 8.1650$, kar pomeni da največji prisekan stožec je očitno valj.
 
-Resitev:   bojda je valj, ni blo navodil tako da ni dodatnih omejitev treba pisat
-x =
-
-    5.7735    5.7735    8.1650    8.1650
-
-
-fval =
-
-  -2.4184e+03
-
-
-flag =
-
-     1
-
-Ostane se drugi del: vsota obeh polmerov je vecja ko 12 -> dodas v februar2014\_3\_con "-x(3) - x(4) + 12" v c
+Da rešimo drugi del naloge (najmanjši volumen ob omejitvi skupnega premera ploskev stožca), pustimo omejitev 3 v $c$ in zopet poženemo \texttt{fmincon}:
+\begin{lstlisting}[language=Matlab]
+[x, fval, flag] = fmincon(@(x)februar2014_3(x), [5 5 9 1], [], [], [], [], zeros(1,4), [10 10 10 10], @(x)februar2014_3_con(x))
+% Vrne:
+% x = 0.0000    9.7980   10.0000    2.0000
+% fval = 1.2723e+03
+% flag = 1
+\end{lstlisting}
+Klic je enak kot prej, razlika je da tokrat izpustimo minus in malce preuredimo začetno točko (da ne presežemo Matlabovih omejitev pri iskanju). Dobimo še drugo rešitev: $h_1 = 0$, $h_2 = 9.798$, $R_1=10$ in $R_2=2$.
 
 
 \subsubsection{Naloga 4.)}

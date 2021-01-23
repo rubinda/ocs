@@ -4,7 +4,7 @@ Solutions including step by step instructions for past (actually really old) exa
 
 Almost all exams are publicly available on [eZbirke exams](https://lspo.feri.um.si/eZbirke/KORZE-Zbirka_izpitnih_nalog_iz_operacijskih_problemov.pdf). Solutions (without procedures) are also available on [eZbirke solutions](https://lspo.feri.um.si/eZbirke/rezultati_zbranih_nalog.pdf).
 
-The main file to look at is [exam-solutions.pdf](exam-solutions.pdf). Sadly I wrote the whole file in slovene, so english readers will have a difficult time.
+The main file to look at is [exam-solutions.pdf](exam-solutions.pdf).
 
 ## License 
 

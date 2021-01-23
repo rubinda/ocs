@@ -14,6 +14,7 @@
 \definecolor{light-gray}{gray}{0.95}
 \usepackage{listings} % za vključevanje kode
 \usepackage{hyperref}
+\usepackage{amssymb}
 
 % Matlab code
 \definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
@@ -571,6 +572,7 @@ Aeq ima 16 stolpcev in 9 vrstic -> pri 7 so desne strani 0, pri source pa sink p
 Izpit je profesor pokazal na vajah.
 
 \subsubsection{Naloga 1.)}
+\label{task:feb2014_1}
 
 \textbf{Navodila:} \\
 Poišči vsaj dvajset različnih globalnih minimumov funkcije in njihovo vrednost (vse so enake) v teh točkah.
@@ -619,6 +621,7 @@ V skriptu upoštevamo omejitev z naključnim generiranjem med 0 in 1, prvo pa sm
 in dobimo rezultate zanje.
 
 \subsubsection{Naloga 3.)}
+\label{task:februar2014_3}
 
 \textbf{Navodila:} \\
 Iz lesene krogle s polmerom $10\si{\cm}$ želimo s pomočjo obrezovanja izdelati prisekani stožec, ki bo imel čim večjo možno prostornino (volumen). Koliko bosta znašala polmera osnovnih ploskev takega prisekanega stožca in koliko njegova višina, da bo volumen dobljenega prisekanega stožca maksimalen? Poskusi rešiti nalogo še za minimalni volumen prisekanega stožca, če želimo, da je vsota obeh polmerov osnovnih ploskev v prisekanem stožcu večja kot $12\si{\cm}$.\\
@@ -673,27 +676,323 @@ Klic je enak kot prej, razlika je da tokrat izpustimo minus in malce preuredimo 
 
 \subsubsection{Naloga 4.)}
 
-gle jslika na namizju. Izdelki so nedeljivi -> pomeni da nastavis integer solutions. Modificiran knapsack problem (izdelki se lahko ponavljajo). Napisati si je treba enacbe (4 spremenljivke, koliko izdelkov P1 = x1, ...).
-Cena $13x_1  +27x_2 + 41x_3 + 55x_4$ - maksimiziras
-Omejitve .... 21 ton + celan stevila (intlinprog, inlincon -> [1 2 3 4] ... vse morajo bit celostevilcne) 
+\textbf{Navodila:} \\
+lastnik tovorjnjaka, ki ima nosilnost tovora 21 ton, ima zahteve po prevozu od štirih podjetij, da bi prepeljal njihove izdelke iz kraja A na kraj B. Vsaka firma
+lahko dobavi toliko kosov svojih izdelkov, kot jih je prevoznik pripravljen prepeljati. Izdelki so nedeljivi (morajo biti prepeljani v celih kosih), tabela podaja
+teže izdelkov posameznih podjetij in ceno za prevoz enega izdelka. Koliko kosov izdelka posameznega podjetja naj prevoznik sprejme, da bo maksimiziral
+svoj zaslužek pri prevozu in tem ne bo presegel nosilnosti tovornjaka? (Nastavi enačbe za reševanje naloge s pomočjo linearnega celoštevilčnega programa in 
+ga reši! Oddaj tudi enačbe in opiši pomen posameznih spremenljivk!)
 
-f= [13 27 41 55]
-A = [1 2 3 4]
-b = 21
+\begin{table} \centering
+\begin{tabular}{ | l | p{3cm} | p{3cm} |}
+\hline
+Podjetje & Teža izdelka v tonah na kos & Prevozni stošek v EUR na kos  \\
+\hline
+1 & 1 & 13 \\
+\hline
+2 & 2 & 27 \\
+\hline
+3 & 3 & 41 \\
+\hline
+4 & 4 & 55 \\
+\hline
+\end{tabular}
+\end{table}
 
-[x, fval, flag] = intlinprog(-f, 1:4, A,b, [], [], zeros(1,4))
-x =
+\vspace{5mm} \noindent \textbf{Rešitev:} \\
+Opisan problem spada v kategorijo ILP. Opravka bomo imeli torej z \texttt{intlinprog}. Nastavimo si najprej enačbe. Maksimizirati želimo dobiček, zato je cenitvena funkcija:
+\begin{equation*}
+f(x) = 13x_1 + 27x_2 + 41x_3 + 55x_4,
+\end{equation*}
+pri čemer $x_i$ predstavlja količino kupljenega izdelka $i$. Omejitve so nosilnost tovornjaka, prepeljemo lahko le cele izdelke (nedeljivost) in ne moremo prepeljati negativno količino:
+\begin{equation*}
+\begin{gathered}
+1x_1 + 2x_2 + 3x_3 + 4x_4 \leq 21 \\
+x_1, x_2, x_3, x_4 \geq 0 \\
+x_1, x_2, x_3, x_4 \in \mathbb{N}^0  \\
+\end{gathered}
+\end{equation*}
+Za rešitev v MATLAB ne rabimo posenih skript, lahko si samo definiramo f, A, b, in intcon:
+\lstinputlisting[language=Matlab]{exams/februar2014_4.m}
+Dobimo maksimalni zaslužek 288 (nasprotna vrednost, zaradi maksimiziranja) pri količinah $x_1 = 1$ in $x_4=5$.
+     
 
-    1.0000
-         0
-         0
-    5.0000
+\subsection{4. november 2015}
 
-fval =
+\subsubsection{Naloga 4.}
 
-  -288
+\textbf{Navodila:}\\
+Odvetniška pisarna je sprejela pet novih primerov. Vsakega od primerov lahko rešuje katerikoli izmed petih pravnikov zaposlenih v tej pisarni, a bodo predvidoma
+potrebovali različno število ur za njihovo rešitev. Tabela podaja ocene potrebnega števila ur za posameznega pravnika pri posameznem primeru:
+\begin{table}[hbt] \centering
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline 
+ & Primer 1 & Primer 2 & Primer 3 & Primer 4 & Primer 5 \\
+ \hline
+ Pravnik 1 & 145 & 122 & 130 & 95 & 110 \\
+ \hline
+ Pravnik 2 & 80 & 63 & 85 & 68 & 78 \\
+ \hline
+ Pravnik 3 & 121 & 107 & 93 & 69 & 95 \\
+ \hline
+ Pravnik 4 & 118 & 93 & 116 & 80 & 105 \\
+ \hline
+ Pravnik 5 & 117 & 85 & 120 & 80 & 111 \\
+ \hline
+\end{tabular}
+\end{table}
+Določi optimalno prireditev primerov posameznim pravnikom, tako da dobi vsak pravnik drug primer in da je skupno število predvidevih porabljenih ur minimalno. Pomagaj si z linearnim programom.
 
-flag =
+\vspace{5mm} \noindent \textbf{Rešitev:} \\
+Definirajmo si najprej spremenljivke. Ker bomo minimirali število porabljenih ur in lahko vsak pravnik rešuje le enega izmed primerov, si izberemo binarne spremenljivke (imajo vrednost 0 ali 1): 
+\begin{center}
+$x_1$ ... pravnik 1 rešuje primer 1 \\
+$x_2$ ... pravnik 1 rešuje primer 2 \\
+... \\
+$x_6$ ... pravnik 2 rešuje primer 1 \\
+... \\
+$x_{25}$ ... pravnik 5 rešuje primer 5 \\
+\end{center}
+Cenitvena funkcija (minimiziranje ur) postane tako:
+\begin{multline}
+f(x) = 145x_1 + 122x_2 + 130x_3 + 95x_4 + 110x_5 + \\
++  80x_6 + 63x_7 + 85x_8 + 68x_9 + 78x_{10} +\\
++  121x_{11} + 107x_{12} + 93x_{13} 69x_{14} + 95x_{15} + \\
++ 118x_{16} + 93x_{17} + 116x_{18} + 80x_{19} + 105x_{20} + \\
++ 117x_{21} + 85x_{22} + 120x_{23} + 80x_{24} + 111x_{25} 
+\end{multline}
+Omejitve pa je potrebno zapisati tako, da vsaka vrstica v zgornji tabeli vrne seštevek 1 in prav tako vsak stolpec!
+\begin{equation*}
+\begin{gathered}
+\sum_{i=1}^5 x_i = 1 $,   $ \sum_{i=6}^{10} x_i = 1 $,   $ \sum_{i=11}^{15} x_i = 1 $,   $ \sum_{i=16}^{20} x_i = 1 $,   $ \sum_{i=21}^{25} x_i = 1 \\
+x_1 + x_6 + x_{11} + x_{16} + x_{21} = 1 \\
+...
+\end{gathered}
+\end{equation*}
+Zgoraj so zapisane omejitve za vse vrstice in primer omejitve za prvi stolpec. Omejitve za preostale 4 stolpce niso zapisane, so pa upoštevane v kodi v nadaljevanju.
 
-     1
+Za rešitev je potrebno definirati matriko $A_{eq}$ in vektor $b_{eq}$, poženemo pa intlinprog: 
+\lstinputlisting[language=Matlab]{exams/november2015_4.m}
+Rešitev pride 448 porabljenih ur in pravnik 1 rešuje primer 5, pravnik 2 rešuje primer 1, pravnik 3 rešuje primer 3, pravnik 4 rešuje primer 4 in pravnik 5 rešuje primer 2.
+
+\subsection{Poskusni kolokvij 2020}
+
+\subsubsection{Naloga 1.}
+
+Glej nalogo~\ref{task:feb2014_1}
+
+\subsubsection{Naloga 2.}
+
+Glej nalogo~\ref{task:februar2014_2}
+
+\subsubsection{Naloga 3.}
+
+Glej nalogo~\ref{task:februar2014_3}
+
+\subsubsection{Naloga 4.}
+
+Napiši funkcijo \texttt{[x fval] = najkrajsa\_pot(c, i, j)}, ki poišče najkrajšo pot med vozliščema $i$ in $j$ grafa, če je v matriki $c$ podan seznam cen povezav, vrednost $c_{ij}$ je cena poti iz vozlišča $i$ v vozlišče $j$. Funkcija bo vrnila matriko $x$ dimenzije $n\times n$, kjer bo za vsako spremenljivko z 1 ali 0 označeno, če se ta veja nahaja v optimalni poti od vozlišča $i$ do vozlišča $j$, fval pa bo najnižja cena (vsota označenih povezav).
+
+Namig: Znotraj svoje funkcije lahko uporabiš klic MATLAB-ove funkcije \texttt{intlinprog}, podatke za klic pa moraš znotraj svoje funkcije v tem primeru pravilno pripraviti (spremenljivke $f$, $A$, $b$, ...).
+
+Nato s pomočjo napisane funkcije poišči rešitev za najkrajši poti med vozliščema 2 in 7 ter med vozliščema 6 in 1. Uporabi cene povezav iz spodaj podane matrike $c$:
+
+\begin{table}[hbt] \centering
+\begin{tabular}{| c |  c |  c |  c |  c |  c |  c |  c | }
+\hline
+Izvor\textbackslash Cilj & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+\hline
+1 & 1000 & 24 & 9 & 13 & 8 & 36 & 4 \\
+\hline
+2 & 9 & 1000 & 12 & 3 & 31 & 7 & 75 \\
+\hline
+3 & 12 & 16 & 1000 & 11 & 5 & 9 & 23 \\
+\hline
+4 & 20 & 43 & 3 & 1000 & 22 & 18 & 21 \\
+\hline
+5 & 2 & 18 & 6 & 39 & 1000 & 18 & 13 \\
+\hline
+6 & 82 & 5 & 1 & 12 & 26 & 1000 & 7 \\
+\hline
+7 & 45 & 27 & 14 & 37 & 8 & 17 & 1000 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{5mm} \noindent \textbf{Rešitev:}
+Za rešitev tega problema si rabimo najprej definirati spremenljivke. Naj bodo to binarne odločitvene spremenljivke, ki povedo ali smo šli po povezavi iz vozlišča ki pripada vrstici v vozlišče, ki pripada stolpcu. Tako dobimo $n^2$ spremenljivk. Cenitvena funkcija naj bo kar matrika zložena v vektor po vrsticah. Torej če gremo po povezavi $e_{ij}$, bo cena takšnega potovanja $c_{ij}$. Vozlišči izvora in ponora morata imeti po en prihod oziroma odhod, zato ti omejitvi pišemo ločeno. Ostale vrstice (za vsako vozlišče po ena) pa imajo odhod enak prihodu ($omejitev_{ij}$ mora biti enaka $omejitev_{ji}$). Ostale posebnosti v kodi so le spreminjanje dimenzij vektorjev in matrik:
+\lstinputlisting[language=Matlab]{exams/najkrajsa_pot.m}
+Vse skupaj pa lahko poženemo s:
+\lstinputlisting[language=Matlab]{exams/poskusni2020_4.m}
+
+
+\subsection{Neuvrščene}
+
+\subsubsection{Maksimalni pretok v grafu}
+
+\textbf{Navodila:} \\
+Podan imamo usmerjen graf, na katerem želimo izračunati največji možen pretok iz izvora $A$ v ponor $D$. Povezave so dvosmerne, vendar lahko po eni povezavi peljemo le toliko kolikor je označeno na povezavah (primer: $A$ v $B$ sprejme 10, $B$ v $A$ pa 0). (Namig: v kolikor ni podano v navodilih, da je potrebno pridobiti rešitev s pomočjo linearnega programa, lahko uporabimo MATLAB \texttt{graph} ali \texttt{digraph} in funkcijo \texttt{maxflow}).
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/unlisted1_graph.png}
+	\caption{Graf povezav. V kolikor povezava ni označena na grafu pomeni, da po njej ne moremo peljati toka (ima utež 0).}
+	\label{img:unlisted1_graph}
+\end{figure}
+
+\vspace{5mm} \noindent \textbf{Rešitev:}\\
+Označimo si najprej spremenljivke na grafu:
+\begin{equation*}
+\begin{gathered}
+A \rightarrow B ... x_ 1 \\
+A \rightarrow C ... x_2 \\
+A \rightarrow D ... x_3 \\
+B \rightarrow C ... x_4 \\
+B \rightarrow D ... x_5 \\
+C \rightarrow B ... x_6 \\
+D \rightarrow B ... \text{ ignoriramo, ker iz ponora ne želimo vzeti toka} \\
+C \rightarrow D ... x_7 
+\end{gathered}
+\end{equation*}
+Naslednji korak je spisati cenitveno funkcijo. Maksimizirati želimo tok ki priteče v ponor, torej želimo maksimizirati tok, ki teče po povezavah katerih cilj je ponor:
+\begin{equation*}
+f(x) = x_3 + x_5 + x_7
+\end{equation*}
+Omejitve je potrebno definirati tako, da lahko iz vozlišča odteče le toliko toka kolikor ga je na voljo (vozlišče $A$ - izvor ima na voljo neskončno veliko toka):
+\begin{equation*}
+\begin{gathered}
+x_1 + x_6 = x_4 + x_5 \\
+x_2 + x_4 = x_6 + x_7 
+\end{gathered}
+\end{equation*}
+Prva omejitev je za vozlišče $B$, na levi strani so povezave, ki pripeljejo tok, na desni pa tiste ki ga odpeljejo. Druga omejitev je spisana po istem načinu za vozlišče $C$.  Seveda je potrebno omejitve spraviti v MATLAB obliko (vse na levo stran in $\leq$ ali $=$).
+
+Spišemo precej enostaven program, paziti je le potrebno na predznak funkcije ker maksimiziramo:
+\lstinputlisting[language=Matlab]{exams/unlisted1_graph.m}
+Prišli smo do rešitve, maksimalen pretok je 22, x pa vsebuje koliko toka smo prepeljali po vsaki povezavi
+
+\subsubsection{Transportni problem}
+
+Imamo Rent-a-Car ponudnika, ki ima dva vira (skladišča) avtomobilov. Na prvem ima parkiranih 15 avtov, na drugem pa 13. Imajo tudi 4 poslovalnice (cilji), pri katerih si stranke lahko izposojajo avtomobile. Predvidevajo, da potrebujejo na na cilju 1 9 avtov, na cilju 2 6 avtov, na cilju 3 7 avtov in na cilju 4 9 avtov. Opazimo, da je zaloge avtomobilov manj, imamo pa tudi stroške da pripeljemo avto iz skladišča v poslovalnico:
+\begin{table}[hbt] \centering
+\begin{tabular}{|c |c | c | c | c |}
+\hline
+	Vir \textbackslash Cilj  & 1 & 2 & 3 & 4 \\
+\hline	
+	1  & 45 & 17 & 21 & 30 \\
+\hline	
+	2  & 14 & 18 & 19 & 31 \\
+\hline
+\end{tabular}
+\end{table}
+Z upoštevanjem potreb poslovalnic po avtomobilih in stroškov, da prepeljemo avtomobil iz enega izmed skladišč najdite najcenejšo rešitev prevažanja avtomobilov.
+
+\vspace{5mm} \noindent \textbf{Rešitev:} \\
+Želimo minimizirati stroške prevoza, zato bodo naše spremenljivke koliko avtov smo pripeljali iz katerega skladišča v katero poslovalnico. Definirajmo torej $x_1$ je število avtomobilov pripeljanih iz vira 1 v cilj 1, $x_2$ je količina avtomobilov pripeljanih iz vira 1 v cilj 2, ... in $x_8$ je količina avtomobilov pripeljanih iz vira 2 v cilj 4. Naša cenitvena funkcija tako postane:
+\begin{equation*}
+f(x) = 45x_1 + 17x_2 +21x_3 + 30x_4 + 14x_5 + 18x_6 + 19x_7 + 31x_8
+\end{equation*} 
+Prvi omejitvi sta količini avtov na vsakem izmed virov:
+\begin{equation*}
+\begin{gathered}
+x_1 + x_2 + x_3 + x_4 = 15 \\
+x_5 + x_6 + x_7 + x_8 = 13
+\end{gathered}
+\end{equation*}
+Pomemben je predznak $=$, saj imamo premalo zalogo. Ker minimiziramo stroške pa upoštevamo tudi potrebe na ciljih (po nepotrebnem ne prevažamo avtov):
+\begin{equation*}
+\begin{gathered}
+x_1 + x_5 \leq 9 \\
+x_2 + x_6 \leq 6 \\
+x_3 + x_7 \leq 7 \\
+x_4 + x_8 \leq 9 \\
+\end{gathered}
+\end{equation*}
+Ker imamo zaloge manj kot je potrebe moramo paziti na predznak $\leq$. V kolikor bi imeli dovolj zaloge ali pa preveč, bi lahko uporabili predznak $=$. Manjkajo še omejitve nenegativnosti in pa celoštevilčnosti (polovica avta na enem cilju in polovica na drugem nam ne koristi).
+
+Uporabimo MATLAB in \texttt{intlinprog}:
+\lstinputlisting[language=Matlab]{exams/unlisted_car_rental.m}
+Najcenejši strošek je torej 547, uporabili pa smo 9 avtov iz vira 2 na cilj 1, 6 avtov iz vira 1 na cilj 2, 3 avte iz vira 1 na cilj 3, 4 avte iz vira 2 na cilj 3 in 6 avtov iz vira 1 na cilj 4.
+
+
+\subsubsection{Graf problem}
+
+(slika na namizju graf\_problem.png) Kombiniran problem dostave izdelkov. Imamo 6 transportnih vozlisc. Stevilke na vozliscih (+ pomeni da je toliko izdelkov v tem skladisci na zalogi), ciljna vozlisca pa so tista kjer je minus (koliko izdelkov rabi). Oznake na povezavah pomenijo ceno za transport enega izdelka po tej povezavi. Cilj naloge je poiskati najcenejso varianto da pripeljemo potrebne kolicine izdelkov iz skladisc v sink (iz + vozlisc v - vozlisca). Vozlisce 4 je vmesno vozlisce, pomeni da ni ne skladisce in ne ponor - preko njega se samo peljemo.
+
+Problem je podoben najkrajse poti in maks flow, s tem da je to vse skombinirano skupaj. Najprej si spet definiramo spremenljivke (katera povezava je katera spremenljivka)
+1->2 .. x1
+1->3 .. x2
+1->4 .. x3
+3->2 .. x4
+3->4 .. x5
+4->2 .. x6
+4->6 .. x7
+4->5 .. x8
+5->6 .. x9
+2->6 .. x10
+Cenitvena funkcija f:
+f = [5 3 3 14 10 3 8 6 15 4];
+
+
+Ker imamo dovolj zaloge (70 zloage, potrebujemo 60) lahko uporabimo enacaje -> v primeru da ni dovolj zaloge uporabimo $\leq$
+Enacba za ciljno vozlisce 2
+x1 + x4 + x6 - x10 = 25   Aeq
+Enacba za ciljno vozlisce 6
+x7 + x9 +x10 = 35  Aeq
+
+Za vsa vozlisca je treba napisati taksne enacbe
+Enacba za vozlisce 3
+x2 + 20 >= x4 + x5 ... lahko kaj ostane v zalogi (na levi strani), ker je imamo vec, zato damo $\geq$  A
+Enacba vozlisce 4 (odhodne povezave smo premaknili na levo stran))
+x3 + x5 + x8 - x6  - x7 = 0  Aeq
+Enacba vozlisce 5  
+x8 + x9 <= 30  A
+Enacba za vozlisce 1
+x1 + x2 + x3 <= 20  A
+
+
+A = [ 0 -1 0 1 1  0 0 0 0 0; 0 0 0 0 0 0 0 1 1 0; 1 1 1 0 0 0 0 0 0 0]
+b = [20; 30; 20]
+Aeq = [1 0 0 1 0 1 0 0  0 -1; 0 0 0 0 0 0 1 0 1 1;  0 0 1 0 1 -1 -1 1 0 0] .. 1 in -1 so odvisne ker das enacbe na isto stran in znak mora biti vseposod $\leq$
+beq = [25; 35; 0]
+LB = zeros(1,10)
+UB  .. je prazen (ne vemo neke dobre omejitve)
+vse resitve zelimo celostevilcne
+[x, fval] = intlinprog(f, ones(1,9), A, b, Aeq, beq, LB)
+f* = 640
+x* = [20 0 0 0 10 40 0 30 0 35]
+
+
+\subsubsection{Geometrijska naloga}
+
+Slika na namizju (skica-geometrijska.png)
+Posici dolzini diagonal tako, da bo ploscina stirikotnika s podanimi stranicami maksimalna. Nato posici se dolzini diaognal za min ploscino stirikotnika ob dodanih pogojih (e <= c+d-0.5, f < a+d-0.5). Koliko znasata maksimalna in minimalna ploscina?
+
+Bretschneider's formula -> katerokili stirikotnik ... obstaja bolj preprost nacin
+Razdelis ga na 2 trikotnika -> ABD in BCD, pa sestavis ploscino iz dveh trikotnikov (Heron's formula) (v splosnem -> S = sqrt( s(s-a)(s-b)(s-c) ), pri cemer je s = (a+b+c)/2)
+
+S = S1 + S2 = sqrt( s1 (s1-a) (s1-f) (s1-d))  + sqrt(s2 (s2-b) (s2-c) (s2-x))
+s1 = (a + d + x) / 2
+s2 = (b + c + x) / 2	... spremenili smo f v x
+kriterijska funkcija 
+f = S1 + S2
+Omejitve: trikotniska neenakost
+x < 13 (a+d || b+c) -> lahko kar recemo UB = 13 (malo manj ko 13)
+
+Maksimum	x=9.33 cm, S = 40.9878 cm2
+					y = 8.896 cm (diagonala e) ... ploscino sestavis iz drugih dveh trikotnikov (naceloma dobis isto ploscino, ali pa iz 2 stranic zracunas drugo diagonalo)
+					
+Minimum ima dodatne omejitve -> lik razpade ce ne bi blo dodatnih omejitev (manjka se pogoj konkavnosti ... recimo noben notranji kot ne sme bit > $\pi$). 
+konveksen lik:
+	S=36.5591 x=11.1399, y=10.5
+konkavni lik (se ni iskalo, se pa lahko naredi (ena diagonala je zunaj lika)
+	S=11.7264, x=3.1, y=?? 
+
+
+\subsubsection{Graf maksimalna neodvisna mnozica (barvanje)}
+
+Imamo nek graf (maks-neodvisna-mnozica.png). Iskalne maksimalne neodvisne mnozice: Zelimo dolocena vozlisca pobarvat z 1 eno barvo -> tako da niti dve pobarvani vozlisci nista sosedi (med pobarvanima vozliscema ne sme biti direktne povezave).
+Lahko se lotis z linearnim programiranjem, hevristiko, evolucijski algoritmi ... ali pa SAT Solver (Boolovi izrazi -> ce so vsi true potem si nasel resitev, das na vsako povezavo da ne sme bit source in sink pobarvana).
+
+
 \end{document}

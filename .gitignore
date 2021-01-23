@@ -8,6 +8,8 @@
 *.dvi
 *.toc
 *.synctex.gz
+*.bbl
+*.blg
 
 # MATLAB
 *.m~

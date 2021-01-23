@@ -1,5 +1,5 @@
 resitve = [];
-n = 3; % Vrednost n iz navodil
+n = 4; % Vrednost n iz navodil
 for i=1:20 % Veckrat poisci resitev
     [x, fval, flag] = fmincon(@(x)-februar2014_2(x), rand(1,n), [], [], [], [], zeros(1,n), ones(1,n), @(x)februar2014_2_con(x));
     if flag == 1
